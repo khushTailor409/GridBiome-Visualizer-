@@ -20,6 +20,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         Label title = new Label("GridBiome Visualizer");
+        title.getStyleClass().add("opening-title");
         Label introduction = new Label("Generate terrain, explore biomes, and simulate weather.");
         Button playButton = new Button("Play");
         
@@ -31,6 +32,7 @@ public class App extends Application {
         openingScreen.setPadding(new Insets(30));
         
         scene = new Scene(openingScreen, 960, 760);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setTitle("GridBiome Visualizer");
         stage.setScene(scene);
         stage.show();
@@ -41,6 +43,7 @@ public class App extends Application {
         Label mainTitle = new Label("GridBiome Visualizer");
         
         mainScreen.setPadding(new Insets(20));
+        mainTitle.getStyleClass().add("main-title");
         mainScreen.setTop(mainTitle);
         mainScreen.setCenter(new Label("Terrain grid"));
         mainScreen.setRight(new Label("Cell information"));
