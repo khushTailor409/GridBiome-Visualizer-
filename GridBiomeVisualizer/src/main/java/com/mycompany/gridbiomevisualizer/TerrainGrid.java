@@ -69,6 +69,25 @@ public class TerrainGrid extends BorderPane {
             }
         };
         
+        grid.setPrefSize(500,500);
+        grid.setMinSize(350, 350);
+        grid.setMaxSize(600, 600);
+        
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                Button cell = new Button();
+                
+                cell.setManaged(false);
+                cell.setMinSize(0, 0);
+                cell.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                cell.setId("cell-" + row + "-" + col);
+                cell.setAccessibleText("Row " + (row + 1) + ", column " + (col + 1) + ": no terrain");
+                cell.getStyleClass().add("terrain-cell");
+                cells[row][col] = cell;
+                grid.getChildren().add(cell);
+            }
+        }
+        
         return grid;
     }
 }
