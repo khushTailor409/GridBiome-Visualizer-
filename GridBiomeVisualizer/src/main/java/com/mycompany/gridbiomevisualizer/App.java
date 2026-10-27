@@ -43,17 +43,7 @@ public class App extends Application {
     }
     
     private void showMainInterface() {
-        BorderPane mainScreen = new BorderPane();
-        Label mainTitle = new Label("GridBiome Visualizer");
-        
-        mainScreen.setPadding(new Insets(20));
-        mainTitle.getStyleClass().add("main-title");
-        mainScreen.setTop(mainTitle);
-        mainScreen.setCenter(new Label("Terrain grid"));
-        mainScreen.setRight(new Label("Cell information"));
-        mainScreen.setBottom(new Label("Terrain legend"));
-        
-        scene.setRoot(mainScreen);
+        scene.setRoot(new TerrainGrid());
     }
 
     public static void main(String[] args) {
