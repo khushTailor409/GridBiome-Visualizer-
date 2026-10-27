@@ -83,11 +83,17 @@ public class TerrainGrid extends BorderPane {
                 cell.setId("cell-" + row + "-" + col);
                 cell.setAccessibleText("Row " + (row + 1) + ", column " + (col + 1) + ": no terrain");
                 cell.getStyleClass().add("terrain-cell");
+                final int cellRow = row;
+                final int cellCol = col;
+                cell.setOnAction(e -> selectCell(cellRow, cellCol));
                 cells[row][col] = cell;
                 grid.getChildren().add(cell);
             }
         }
-        
         return grid;
+    }
+    
+    private void selectCell(int row, int col) {
+        statusLabel.setText("No terrain exists yet. Cell information will appear after generation.");
     }
 }
