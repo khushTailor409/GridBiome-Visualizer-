@@ -1,6 +1,8 @@
 package com.mycompany.gridbiomevisualizer;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +21,11 @@ public class App extends Application {
         Label introduction = new Label("Generate terrain, explore biomes, and simulate weather.");
         Button playButton = new Button("Play");
         
+        playButton.setPrefWidth(150);
+        
         VBox openingScreen = new VBox(22, title, introduction, playButton);
+        openingScreen.setAlignment(Pos.CENTER);
+        openingScreen.setPadding(new Insets(30));
         
         Scene scene = new Scene(openingScreen, 960, 760);
         stage.setTitle("GridBiome Visualizer");
