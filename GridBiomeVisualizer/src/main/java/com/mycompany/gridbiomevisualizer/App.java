@@ -24,7 +24,9 @@ public class App extends Application {
         Label introduction = new Label("Generate terrain, explore biomes, and simulate weather.");
         Button playButton = new Button("Play");
         
+        playButton.setId("play");
         playButton.setPrefWidth(150);
+        playButton.setDefaultButton(true);
         playButton.setOnAction(e -> showMainInterface());
         
         VBox openingScreen = new VBox(22, title, introduction, playButton);
@@ -34,6 +36,8 @@ public class App extends Application {
         scene = new Scene(openingScreen, 960, 760);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setTitle("GridBiome Visualizer");
+        stage.setMinWidth(900);
+        stage.setMinHeight(700);
         stage.setScene(scene);
         stage.show();
     }
