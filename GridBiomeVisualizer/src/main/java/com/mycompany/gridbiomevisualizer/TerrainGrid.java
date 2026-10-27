@@ -9,6 +9,13 @@ import javafx.scene.layout.VBox;
  * JavaFX TerrainGrid
  */
 public class TerrainGrid extends BorderPane {
+    private final Label positionLabel = new Label("Position: --");
+    private final Label altitudeLabel = new Label("Altitude: --");
+    private final Label biomeLabel = new Label("Biome: --");
+    private final Label temperatureLabel = new Label("Temperature: --");
+    private final Label precipitationLabel = new Label("Precipitation: --");
+    private final Label weatherLabel = new Label("Weather: --");
+    private final Label statusLabel = new Label("No terrain generated.");
     
     public TerrainGrid() {
         Label title = new Label("GridBiome Visualizer");
