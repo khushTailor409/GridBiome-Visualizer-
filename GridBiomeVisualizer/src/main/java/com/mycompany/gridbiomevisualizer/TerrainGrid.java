@@ -1,11 +1,13 @@
 package com.mycompany.gridbiomevisualizer;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -71,6 +73,7 @@ public class TerrainGrid extends BorderPane {
         
         statusLabel.setWrapText(true);
         setBottom(new VBox(10, legendTitle, legendItems, statusLabel));
+        updateLegend();
     }
 
     private Pane createGrid() {
@@ -120,5 +123,28 @@ public class TerrainGrid extends BorderPane {
 
     private void selectCell(int row, int col) {
         statusLabel.setText("No terrain exists yet. Cell information will appear after generation.");
+    }
+    
+    private void addLegendItem(String text, String styleClass) {
+        Label swatch = new Label();
+        
+        swatch.setMinSize(16, 16);
+        swatch.setPrefSize(16, 16);
+        swatch.setMaxSize(16, 16);
+        swatch.getStyleClass().addAll("legend-swatch", styleClass);
+        
+        HBox item = new HBox(6, swatch, new Label(text));
+        item.setAlignment(Pos.CENTER_LEFT);
+        legendItems.getChildren().add(item);
+    }
+    
+    private void updateLegend() {
+        legendItems.getChildren().clear();
+        legendTitle.setText("Terrain legend (altitude)");
+        
+        for (BiomeMapper.Biome biome : BiomeMapper.Biome.values()) {
+            addLegendItem(biome.getDisplayName() + " " + biome.getRange(),
+                    "biome-" + biome.name().toLowerCase(java.util.Locale.ROOT));
+        }
     }
 }
