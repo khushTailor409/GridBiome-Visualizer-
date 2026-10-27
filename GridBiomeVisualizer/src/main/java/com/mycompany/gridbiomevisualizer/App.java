@@ -40,6 +40,12 @@ public class App extends Application {
         BorderPane mainScreen = new BorderPane();
         Label mainTitle = new Label("GridBiome Visualizer");
         
+        mainScreen.setPadding(new Insets(20));
+        mainScreen.setTop(mainTitle);
+        mainScreen.setCenter(new Label("Terrain grid"));
+        mainScreen.setRight(new Label("Cell information"));
+        mainScreen.setBottom(new Label("Terrain legend"));
+        
         scene.setRoot(mainScreen);
     }
 
