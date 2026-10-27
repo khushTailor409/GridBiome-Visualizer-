@@ -33,10 +33,34 @@ public class TerrainGenerator {
         }
         
         for (int pass = 0; pass < SMOOTHING_PASSES; pass++) {
-            //add method to smooth 
+            altitudes = smooth(altitudes);
         }
         return altitudes;
     }
     
+    int[][] smooth(int[][] source) {
+    int[][] result = new int[GRID_SIZE][GRID_SIZE];
+    int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     
+    for (int row = 0; row < GRID_SIZE; row++) {
+        for (int col = 0; col < GRID_SIZE; col++) {
+            int sum = source[row][col] * 4;
+            int weight = 4;
+            
+            for (int[] direction : directions) {
+                int neighborRow = row + direction[0];
+                int neighborCol = col + direction[1];
+                
+                if (neighborRow >= 0 && neighborRow < GRID_SIZE
+                    && neighborCol >= 0 && neighborCol < GRID_SIZE) {
+                    sum += source[neighborRow][neighborCol];
+                    weight++;
+                }
+            }
+            int altitude = (int) Math.round((double) sum / weight);
+            result[row][col] = Math.max(0, Math.min(100, altitude));
+        }
+    }
+        return result;
+    }
 }
