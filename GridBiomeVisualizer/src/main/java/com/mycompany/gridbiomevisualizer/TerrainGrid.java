@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
  * JavaFX TerrainGrid
  */
 public class TerrainGrid extends BorderPane {
-    private static final int GRID_SIZE = 10;
+    private static final int GRID_SIZE = TerrainGenerator.GRID_SIZE;
     private final Button[][] cells = new Button[GRID_SIZE][GRID_SIZE];
     private final Label positionLabel = new Label("Position: --");
     private final Label altitudeLabel = new Label("Altitude: --");
@@ -31,6 +31,8 @@ public class TerrainGrid extends BorderPane {
     private final Button weatherButton = new Button("Simulate Weather");
     private final Label legendTitle = new Label("Terrain legend (altitude)");
     private final FlowPane legendItems = new FlowPane(14, 8);
+    private final TerrainGenerator generator = new TerrainGenerator();
+    private int[][] altitudes;
 
     public TerrainGrid() {
         setPadding(new Insets(18));
@@ -147,4 +149,29 @@ public class TerrainGrid extends BorderPane {
                     "biome-" + biome.name().toLowerCase(java.util.Locale.ROOT));
         }
     }
+
+    
+    private void renderCells() {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                int altitude = altitudes[row][col];
+                
+                BiomeMapper.Biome biome = BiomeMapper.classify(altitude);
+                String text = Integer.toString(altitude);
+                String styleClass = "biome-" + biome.name().toLowerCase(java.util.Locale.ROOT);
+                String description = "Row " + (row + 1) + ", column " + (col + 1)
+                        + ": altitude " + altitude + ", " + biome.getDisplayName();
+                
+                cells[row][col].setText(text);
+                cells[row][col].setAccessibleText(description);
+                cells[row][col].getStyleClass().setAll("button", "terrain-cell", styleClass);
+                
+                if (row == selectedRow && col == selectedCol) {
+                    cells[row][col].getStyleClass().add("selected");
+                }
+            }
+        }
+    }
+    
+    
 }
