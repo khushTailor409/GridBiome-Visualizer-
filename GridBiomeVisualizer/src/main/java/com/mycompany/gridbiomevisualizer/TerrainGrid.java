@@ -19,6 +19,7 @@ public class TerrainGrid extends BorderPane {
     
     public TerrainGrid() {
         Label title = new Label("GridBiome Visualizer");
+        title.getStyleClass().add("main-title");
         VBox header = new VBox(12, title);
         
         setPadding(new Insets(18));
@@ -26,9 +27,13 @@ public class TerrainGrid extends BorderPane {
         BorderPane.setMargin(header, new Insets(0, 0, 16, 0));
         
         VBox information = new VBox(14, new Label("Selected cell"), positionLabel, altitudeLabel, biomeLabel, temperatureLabel, precipitationLabel, weatherLabel);
+        information.setPrefWidth(215);
+        information.setMinWidth(215);
         information.setPadding(new Insets(16));
+        information.getStyleClass().add("information-panel");
         setRight(information);
         BorderPane.setMargin(information, new Insets(0, 0, 16, 0));
+        statusLabel.setWrapText(true);
         setBottom(statusLabel);
         
         altitudeLabel.setId("info-altitude");
