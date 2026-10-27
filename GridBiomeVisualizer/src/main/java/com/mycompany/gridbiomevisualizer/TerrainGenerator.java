@@ -23,5 +23,20 @@ public class TerrainGenerator {
         this.random = random;
     }
     
+    public int[][] generate() {
+        int[][] altitudes = new int[GRID_SIZE][GRID_SIZE];
+    
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                altitudes[row][col] = random.nextInt(101);
+            }
+        }
+        
+        for (int pass = 0; pass < SMOOTHING_PASSES; pass++) {
+            //add method to smooth 
+        }
+        return altitudes;
+    }
+    
     
 }
