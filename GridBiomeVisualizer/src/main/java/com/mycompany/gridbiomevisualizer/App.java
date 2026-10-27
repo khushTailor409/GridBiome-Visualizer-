@@ -3,7 +3,7 @@ package com.mycompany.gridbiomevisualizer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -14,6 +14,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        Label title = new Label("GridBiome Visualizer");
+        
+        VBox openingScreen = new VBox(22, title);
+        
+        Scene scene = new Scene(openingScreen, 960, 760);
+        stage.setTitle("GridBiome Visualizer");
+        stage.setScene(scene);
+        stage.show();
 
     }
 
