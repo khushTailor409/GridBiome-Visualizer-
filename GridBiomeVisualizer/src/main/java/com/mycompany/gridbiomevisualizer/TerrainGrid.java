@@ -1,6 +1,7 @@
 package com.mycompany.gridbiomevisualizer;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -11,6 +12,8 @@ import javafx.scene.layout.VBox;
  * JavaFX TerrainGrid
  */
 public class TerrainGrid extends BorderPane {
+    private static final int GRID_SIZE = 10;
+    private final Button[][] cells = new Button[GRID_SIZE][GRID_SIZE];
     private final Label positionLabel = new Label("Position: --");
     private final Label altitudeLabel = new Label("Altitude: --");
     private final Label biomeLabel = new Label("Biome: --");
@@ -50,6 +53,22 @@ public class TerrainGrid extends BorderPane {
     }
     
     private Pane createGrid() {
+        Pane grid = new Pane() {
+            @Override
+            protected void layoutChildren() {
+                double side = Math.min(getWidth(), getHeight());
+                double cellSize = side / GRID_SIZE;
+                double left = (getWidth() - side) / 2;
+                double top = (getHeight() - side) / 2;
+                
+                for (int row = 0; row < GRID_SIZE; row++) {
+                    for (int col = 0; col < GRID_SIZE; col++) {
+                        cells[row][col].resizeRelocate(left + col * cellSize, top + row * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+        };
         
+        return grid;
     }
 }
