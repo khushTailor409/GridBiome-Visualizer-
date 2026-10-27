@@ -3,6 +3,8 @@ package com.mycompany.gridbiomevisualizer;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -41,5 +43,13 @@ public class TerrainGrid extends BorderPane {
         weatherLabel.setId("info-weather");
         positionLabel.setId("info-position");
         statusLabel.setId("status");
+        
+        StackPane gridHolder = new StackPane(createGrid());
+        setCenter(gridHolder);
+        BorderPane.setMargin(gridHolder, new Insets(0, 16, 16, 0));
+    }
+    
+    private Pane createGrid() {
+        
     }
 }
