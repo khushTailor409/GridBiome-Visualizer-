@@ -1,0 +1,17 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Style sheet for GridBiome Visualizer
+*/
+.opening-title { 
+    -fx-font-size: 30px;
+    -fx-font-weight: bold; 
+}
+
+.main-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
