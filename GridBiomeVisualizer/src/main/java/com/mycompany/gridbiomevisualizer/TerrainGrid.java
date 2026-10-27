@@ -191,4 +191,12 @@ public class TerrainGrid extends BorderPane {
     }
     
     
+    private void generateTerrain() {
+        altitudes = generator.generate();
+        selectedRow = -1;
+        selectedCol = -1;
+        clearInformation();
+        renderCells();
+        statusLabel.setText("New terrain generated. Select a cell to inspect it.");
+    }
 }
