@@ -40,3 +40,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-color: #111827;
     -fx-border-width: 3px;
 }
+
+.legend-swatch {
+    -fx-border-color: #7b8794;
+}
+
+.biome-ocean {
+   -fx-background-color: #3979b9;
+   -fx-text-fill: white;
+} 
+
+.biome-beach {
+   -fx-background-color: #e6cf8b; 
+   -fx-text-fill: #17212b;
+}  
+
+.biome-grassland {
+   -fx-background-color: #9acb70;
+   -fx-text-fill: #17212b;
+}
+
+.biome-forest {
+   -fx-background-color: #316c42;
+   -fx-text-fill: white;
+} 
+
+.biome-mountain {
+    -fx-background-color: #69717d;
+    -fx-text-fill: white;
+} 
