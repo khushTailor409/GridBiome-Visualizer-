@@ -19,3 +19,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: white;
     -fx-border-color: #d5dce3;
 }
+
+.terrain-cell {
+    -fx-background-color: #e7ecf1;
+    -fx-text-fill: #17212b;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: white;
+    -fx-border-width: 0.5px;
+    -fx-padding: 0;
+    -fx-font-size: 12px;
+}
+
+.terrain-cell:focused {
+    -fx-border-color: #111827;
+    -fx-border-width: 2px;
+}
+
+.terrain-cell.selected {
+    -fx-border-color: #111827;
+    -fx-border-width: 3px;
+}
