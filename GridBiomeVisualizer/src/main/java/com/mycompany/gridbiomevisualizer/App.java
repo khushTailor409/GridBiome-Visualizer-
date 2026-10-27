@@ -24,6 +24,7 @@ public class App extends Application {
         Button playButton = new Button("Play");
         
         playButton.setPrefWidth(150);
+        playButton.setOnAction(e -> showMainInterface());
         
         VBox openingScreen = new VBox(22, title, introduction, playButton);
         openingScreen.setAlignment(Pos.CENTER);
