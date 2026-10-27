@@ -25,5 +25,10 @@ public class TerrainGrid extends BorderPane {
         setTop(header);
         BorderPane.setMargin(header, new Insets(0, 0, 16, 0));
         
+        VBox information = new VBox(14, new Label("Selected cell"), positionLabel, altitudeLabel, biomeLabel, temperatureLabel, precipitationLabel, weatherLabel);
+        information.setPadding(new Insets(16));
+        setRight(information);
+        BorderPane.setMargin(information, new Insets(0, 0, 16, 0));
+        setBottom(statusLabel);
     }
 }
