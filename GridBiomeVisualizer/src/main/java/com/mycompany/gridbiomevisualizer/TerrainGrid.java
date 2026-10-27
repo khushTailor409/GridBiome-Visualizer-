@@ -1,5 +1,6 @@
 package com.mycompany.gridbiomevisualizer;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -8,6 +9,14 @@ import javafx.scene.layout.VBox;
  * JavaFX TerrainGrid
  */
 public class TerrainGrid extends BorderPane {
-    Label title = new Label("GridBiome Visualizer");
-    VBox header = new VBox(12, title);
+    
+    public TerrainGrid() {
+        Label title = new Label("GridBiome Visualizer");
+        VBox header = new VBox(12, title);
+        
+        setPadding(new Insets(18));
+        setTop(header);
+        BorderPane.setMargin(header, new Insets(0, 0, 16, 0));
+        
+    }
 }
