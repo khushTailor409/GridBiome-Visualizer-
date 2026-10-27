@@ -30,5 +30,11 @@ public class TerrainGrid extends BorderPane {
         setRight(information);
         BorderPane.setMargin(information, new Insets(0, 0, 16, 0));
         setBottom(statusLabel);
+        
+        altitudeLabel.setId("info-altitude");
+        biomeLabel.setId("info-biome");
+        weatherLabel.setId("info-weather");
+        positionLabel.setId("info-position");
+        statusLabel.setId("status");
     }
 }
