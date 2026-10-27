@@ -15,3 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-font-weight: bold;
 }
 
+.information-panel {
+    -fx-background-color: white;
+    -fx-border-color: #d5dce3;
+}
