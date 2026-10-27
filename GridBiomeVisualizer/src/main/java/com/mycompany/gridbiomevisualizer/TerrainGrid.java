@@ -173,5 +173,22 @@ public class TerrainGrid extends BorderPane {
         }
     }
     
+    private void updateInformation() {
+        if (selectedRow < 0 || altitudes == null) return;
+        int altitude = altitudes[selectedRow][selectedCol];
+        positionLabel.setText("Position: " + (selectedRow + 1) + ", " + (selectedCol + 1));
+        altitudeLabel.setText("Altitude: " + altitude);
+        biomeLabel.setText("Biome: " + BiomeMapper.classify(altitude).getDisplayName());
+    }
+    
+    private void clearInformation() {
+        positionLabel.setText("Position: --");
+        altitudeLabel.setText("Altitude: --");
+        biomeLabel.setText("Biome: --");
+        temperatureLabel.setText("Temperature: --");
+        precipitationLabel.setText("Precipitation: --");
+        weatherLabel.setText("Weather: --");
+    }
+    
     
 }
