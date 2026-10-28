@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
-/** testing
+/** testin
  * JavaFX App
  */
 public class App extends Application {
