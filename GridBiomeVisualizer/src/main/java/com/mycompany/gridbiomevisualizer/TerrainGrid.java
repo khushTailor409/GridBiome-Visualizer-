@@ -49,8 +49,7 @@ public class TerrainGrid extends BorderPane {
         generateButton.setId("generate");
         weatherButton.setId("simulate-weather");
         weatherButton.setDisable(true);
-        generateButton.setDisable(true);
-        statusLabel.setText("No terrain generated. Generation will be connected in the next stage.");
+        generateButton.setOnAction(e -> generateTerrain());
         weatherButton.setTooltip(new Tooltip("Weather simulation is connected in stage 6."));
         
         header.getChildren().add(new FlowPane(12, 8, generateButton, weatherButton));
@@ -124,7 +123,21 @@ public class TerrainGrid extends BorderPane {
     }
 
     private void selectCell(int row, int col) {
-        statusLabel.setText("No terrain exists yet. Cell information will appear after generation.");
+        if (altitudes == null) {
+            statusLabel.setText("Generate terrain before selecting a cell.");
+            return;
+        }
+
+        selectedRow = row;
+        selectedCol = col;
+
+        renderCells();
+        updateInformation();
+
+        statusLabel.setText(
+            "Selected row " + (row + 1)
+            + ", column " + (col + 1) + "."
+        );
     }
     
     private void addLegendItem(String text, String styleClass) {
