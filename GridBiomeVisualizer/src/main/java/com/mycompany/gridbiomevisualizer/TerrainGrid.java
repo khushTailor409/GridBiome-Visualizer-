@@ -2,6 +2,9 @@ package com.mycompany.gridbiomevisualizer;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -51,18 +54,23 @@ public class TerrainGrid extends BorderPane {
         
         generateButton.setId("generate");
         weatherButton.setId("simulate-weather");
-        //weatherButton.setDisable(true);
+       // weatherButton.setDisable(true);
         generateButton.setOnAction(e -> generateTerrain());
         weatherButton.setOnAction(event -> simulateWeather());
         ToggleGroup viewGroup = new ToggleGroup();
         weatherView.setToggleGroup(viewGroup);
         weatherView.setId("weather-view");
-        weatherView.setDisable(true);
+        //weatherView.setDisable(true);
         weatherView.setOnAction(event -> refreshView());
-        
-        header.getChildren().add(new FlowPane(12, 8, generateButton, weatherButton));
+
+        header.getChildren().addAll(
+                new FlowPane(12, 8, generateButton, weatherButton),
+                new HBox(12, new Label("View:"), weatherView)
+        );
+
         setTop(header);
         BorderPane.setMargin(header, new Insets(0, 0, 16, 0));
+
 
         StackPane gridHolder = new StackPane(createGrid());
         setCenter(gridHolder);
