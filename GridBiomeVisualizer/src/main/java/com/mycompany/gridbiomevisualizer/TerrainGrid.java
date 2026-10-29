@@ -36,6 +36,7 @@ public class TerrainGrid extends BorderPane {
     private int[][] altitudes;
     private final WeatherSimulator simulator = new WeatherSimulator();
     private WeatherSimulator.WeatherData[][] weatherData;
+    private final RadioButton terrainView = new RadioButton("Terrain");
     private final RadioButton weatherView = new RadioButton("Weather");
 
 
@@ -58,14 +59,18 @@ public class TerrainGrid extends BorderPane {
         generateButton.setOnAction(e -> generateTerrain());
         weatherButton.setOnAction(event -> simulateWeather());
         ToggleGroup viewGroup = new ToggleGroup();
+        terrainView.setToggleGroup(viewGroup);
         weatherView.setToggleGroup(viewGroup);
+        terrainView.setId("terrain-view");
         weatherView.setId("weather-view");
+        terrainView.setSelected(true);
         //weatherView.setDisable(true);
+        terrainView.setOnAction(event -> refreshView());
         weatherView.setOnAction(event -> refreshView());
 
         header.getChildren().addAll(
                 new FlowPane(12, 8, generateButton, weatherButton),
-                new HBox(12, new Label("View:"), weatherView)
+                new HBox(12, new Label("View:"),terrainView, weatherView)
         );
 
         setTop(header);
@@ -256,6 +261,12 @@ public class TerrainGrid extends BorderPane {
         altitudes = generator.generate();
         selectedRow = -1;
         selectedCol = -1;
+        weatherData = null;
+        terrainView.setSelected(true);
+        terrainView.setDisable(false);
+        weatherView.setDisable(true);
+        weatherButton.setDisable(false);
+        updateLegend();
         clearInformation();
         renderCells();
         statusLabel.setText("New terrain generated. Select a cell to inspect it.");
