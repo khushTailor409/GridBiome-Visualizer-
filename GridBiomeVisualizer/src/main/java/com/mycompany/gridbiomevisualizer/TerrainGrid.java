@@ -207,6 +207,14 @@ public class TerrainGrid extends BorderPane {
         positionLabel.setText("Position: " + (selectedRow + 1) + ", " + (selectedCol + 1));
         altitudeLabel.setText("Altitude: " + altitude);
         biomeLabel.setText("Biome: " + BiomeMapper.classify(altitude).getDisplayName());
+        if (weatherData != null) {
+            WeatherSimulator.WeatherData data = weatherData[selectedRow][selectedCol];
+            temperatureLabel.setText(String.format(java.util.Locale.ROOT,
+                    "Temperature: %.1f °C", data.getTemperature()));
+            precipitationLabel.setText(String.format(java.util.Locale.ROOT,
+                    "Precipitation: %.1f%%", data.getPrecipitation()));
+            weatherLabel.setText("Weather: " + data.getCondition().getDisplayName());
+        }
     }
     
     private void clearInformation() {
@@ -222,7 +230,6 @@ public class TerrainGrid extends BorderPane {
     private void simulateWeather() {
         if (altitudes == null) return;
         weatherData = simulator.simulate(altitudes);
-        statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
         weatherView.setDisable(false);
         weatherView.setSelected(true);
         refreshView();
