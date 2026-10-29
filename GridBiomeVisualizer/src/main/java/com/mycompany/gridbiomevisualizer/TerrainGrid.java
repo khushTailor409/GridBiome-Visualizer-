@@ -202,7 +202,12 @@ public class TerrainGrid extends BorderPane {
                 String styleClass = "biome-" + biome.name().toLowerCase(java.util.Locale.ROOT);
                 String description = "Row " + (row + 1) + ", column " + (col + 1)
                         + ": altitude " + altitude + ", " + biome.getDisplayName();
-                
+                if (weatherView.isSelected() && weatherData != null) {
+                    WeatherSimulator.Condition condition = weatherData[row][col].getCondition();
+                    text = condition.getDisplayName();
+                    styleClass = "weather-" + condition.name().toLowerCase(java.util.Locale.ROOT);
+                    description += ", " + condition.getDisplayName();
+                }
                 cells[row][col].setText(text);
                 cells[row][col].setAccessibleText(description);
                 cells[row][col].getStyleClass().setAll("button", "terrain-cell", styleClass);
