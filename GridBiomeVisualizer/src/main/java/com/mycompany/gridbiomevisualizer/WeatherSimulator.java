@@ -73,4 +73,23 @@ public class WeatherSimulator {
         }
         return results;
     }
+
+    public static WeatherData calculate(int altitude, int variation) {
+        if (altitude < 0 || altitude > 100 || variation < -15 || variation > 15) {
+            throw new IllegalArgumentException("Invalid altitude or precipitation variation.");
+        }
+        double temperature = 25 - 0.30 * altitude;
+        double precipitation = Math.max(0, Math.min(100, 30 + 0.5 * altitude + variation));
+        return new WeatherData(temperature, precipitation,
+                classify(temperature, precipitation));
+    }
+
+    public static Condition classify(double temperature, double precipitation) {
+        if (temperature <= 0 && precipitation >= 40) return Condition.SNOW;
+        if (temperature > 0 && precipitation >= 60) return Condition.RAIN;
+        if (precipitation >= 40) return Condition.CLOUDY;
+        return Condition.CLEAR;
+    }
 }
+
+
