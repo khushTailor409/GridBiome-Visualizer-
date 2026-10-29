@@ -4,6 +4,8 @@
  */
 package com.mycompany.gridbiomevisualizer;
 
+import java.util.Random;
+
 /**
  *
  * @author BAF
@@ -49,5 +51,26 @@ public class WeatherSimulator {
             return condition;
         }
         
+    }
+    private final Random random;
+
+    public WeatherSimulator() {
+        this(new Random());
+    }
+
+    public WeatherSimulator(Random random) {
+        this.random = random;
+    }
+
+    public WeatherData[][] simulate(int[][] altitudes) {
+        WeatherData[][] results = new WeatherData[altitudes.length][];
+        for (int row = 0; row < altitudes.length; row++) {
+            results[row] = new WeatherData[altitudes[row].length];
+            for (int col = 0; col < altitudes[row].length; col++) {
+                int variation = random.nextInt(31) - 15;
+                results[row][col] = calculate(altitudes[row][col], variation);
+            }
+        }
+        return results;
     }
 }
