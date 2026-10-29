@@ -55,7 +55,7 @@ public class TerrainGrid extends BorderPane {
         
         generateButton.setId("generate");
         weatherButton.setId("simulate-weather");
-       // weatherButton.setDisable(true);
+        weatherButton.setDisable(true);
         generateButton.setOnAction(e -> generateTerrain());
         weatherButton.setOnAction(event -> simulateWeather());
         ToggleGroup viewGroup = new ToggleGroup();
@@ -64,7 +64,7 @@ public class TerrainGrid extends BorderPane {
         terrainView.setId("terrain-view");
         weatherView.setId("weather-view");
         terrainView.setSelected(true);
-        //weatherView.setDisable(true);
+        weatherView.setDisable(true);
         terrainView.setOnAction(event -> refreshView());
         weatherView.setOnAction(event -> refreshView());
 
