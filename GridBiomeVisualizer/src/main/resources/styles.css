@@ -1,0 +1,147 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Style sheet for GridBiome Visualizer
+*/
+.opening-title { 
+    -fx-font-size: 30px;
+    -fx-font-weight: bold; 
+}
+
+.main-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.information-panel {
+    -fx-background-color: white;
+    -fx-border-color: #d5dce3;
+}
+
+.terrain-cell {
+    -fx-background-color: #e7ecf1;
+    -fx-text-fill: #17212b;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: white;
+    -fx-border-width: 0.5px;
+    -fx-padding: 0;
+    -fx-font-size: 12px;
+}
+
+.terrain-cell:focused {
+    -fx-border-color: #111827;
+    -fx-border-width: 2px;
+}
+
+.terrain-cell.selected {
+    -fx-border-color: #111827;
+    -fx-border-width: 3px;
+}
+
+.legend-swatch {
+    -fx-border-color: #7b8794;
+}
+
+.biome-ocean {
+   -fx-background-color: #3979b9;
+   -fx-text-fill: white;
+} 
+
+.biome-beach {
+   -fx-background-color: #e6cf8b; 
+   -fx-text-fill: #17212b;
+}  
+
+.biome-grassland {
+   -fx-background-color: #9acb70;
+   -fx-text-fill: #17212b;
+}
+
+.biome-forest {
+   -fx-background-color: #316c42;
+   -fx-text-fill: white;
+} 
+
+.biome-mountain {
+    -fx-background-color: #69717d;
+    -fx-text-fill: white;
+}
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-background-color: #f6f8fa;
+}
+
+.opening-title { -fx-font-size: 30px; -fx-font-weight: bold; }
+.main-title { -fx-font-size: 24px; -fx-font-weight: bold; }
+.information-panel { -fx-background-color: white; -fx-border-color: #d5dce3; }
+
+.terrain-cell {
+    -fx-background-color: #e7ecf1;
+    -fx-text-fill: #17212b;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: white;
+    -fx-border-width: 0.5px;
+    -fx-padding: 0;
+    -fx-font-size: 12px;
+}
+
+.terrain-cell:focused {
+    -fx-border-color: #111827;
+    -fx-border-width: 2px;
+}
+
+.terrain-cell.selected {
+    -fx-border-color: #111827;
+    -fx-border-width: 3px;
+}
+
+.legend-swatch {
+    -fx-border-color: #7b8794;
+}
+
+/* The same classes color both grid cells and legend swatches. */
+.biome-ocean {
+    -fx-background-color: #3979b9;
+    -fx-text-fill: white;
+}
+
+.biome-beach {
+    -fx-background-color: #e6cf8b;
+    -fx-text-fill: #17212b;
+}
+
+.biome-grassland {
+    -fx-background-color: #9acb70;
+    -fx-text-fill: #17212b;
+}
+
+.biome-forest {
+    -fx-background-color: #316c42;
+    -fx-text-fill: white;
+}
+
+.biome-mountain {
+    -fx-background-color: #69717d;
+    -fx-text-fill: white; }
+
+.weather-clear {
+    -fx-background-color: #f5d76e;
+    -fx-text-fill: #17212b; }
+
+.weather-cloudy {
+    -fx-background-color: #c5cbd3;
+    -fx-text-fill: #17212b; }
+
+.weather-rain {
+    -fx-background-color: #426b9d;
+    -fx-text-fill: white; }
+
+.weather-snow {
+    -fx-background-color: #eff7ff;
+    -fx-text-fill: #17212b;
+  }
