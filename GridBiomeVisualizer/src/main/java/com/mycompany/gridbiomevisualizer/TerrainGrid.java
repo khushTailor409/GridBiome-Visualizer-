@@ -2,9 +2,7 @@ package com.mycompany.gridbiomevisualizer;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -33,6 +31,11 @@ public class TerrainGrid extends BorderPane {
     private final FlowPane legendItems = new FlowPane(14, 8);
     private final TerrainGenerator generator = new TerrainGenerator();
     private int[][] altitudes;
+    private final WeatherSimulator simulator = new WeatherSimulator();
+    private WeatherSimulator.WeatherData[][] weatherData;
+    private final RadioButton weatherView = new RadioButton("Weather");
+
+
 
     public TerrainGrid() {
         setPadding(new Insets(18));
@@ -48,9 +51,14 @@ public class TerrainGrid extends BorderPane {
         
         generateButton.setId("generate");
         weatherButton.setId("simulate-weather");
-        weatherButton.setDisable(true);
+        //weatherButton.setDisable(true);
         generateButton.setOnAction(e -> generateTerrain());
-        weatherButton.setTooltip(new Tooltip("Weather simulation is connected in stage 6."));
+        weatherButton.setOnAction(event -> simulateWeather());
+        ToggleGroup viewGroup = new ToggleGroup();
+        weatherView.setToggleGroup(viewGroup);
+        weatherView.setId("weather-view");
+        weatherView.setDisable(true);
+        weatherView.setOnAction(event -> refreshView());
         
         header.getChildren().add(new FlowPane(12, 8, generateButton, weatherButton));
         setTop(header);
@@ -139,7 +147,7 @@ public class TerrainGrid extends BorderPane {
             + ", column " + (col + 1) + "."
         );
     }
-    
+
     private void addLegendItem(String text, String styleClass) {
         Label swatch = new Label();
         
@@ -155,8 +163,15 @@ public class TerrainGrid extends BorderPane {
     
     private void updateLegend() {
         legendItems.getChildren().clear();
+        if (weatherView.isSelected() && weatherData != null) {
+            legendTitle.setText("Weather legend");
+            for (WeatherSimulator.Condition condition : WeatherSimulator.Condition.values()) {
+                addLegendItem(condition.getDisplayName(),
+                        "weather-" + condition.name().toLowerCase(java.util.Locale.ROOT));
+            }
+            return;
+        }
         legendTitle.setText("Terrain legend (altitude)");
-        
         for (BiomeMapper.Biome biome : BiomeMapper.Biome.values()) {
             addLegendItem(biome.getDisplayName() + " " + biome.getRange(),
                     "biome-" + biome.name().toLowerCase(java.util.Locale.ROOT));
@@ -202,7 +217,25 @@ public class TerrainGrid extends BorderPane {
         precipitationLabel.setText("Precipitation: --");
         weatherLabel.setText("Weather: --");
     }
-    
+
+
+    private void simulateWeather() {
+        if (altitudes == null) return;
+        weatherData = simulator.simulate(altitudes);
+        statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
+        weatherView.setDisable(false);
+        weatherView.setSelected(true);
+        refreshView();
+        statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
+
+    }
+    private void refreshView() {
+        if (altitudes == null) return;
+        renderCells();
+        updateLegend();
+        updateInformation();
+    }
+
     
     private void generateTerrain() {
         altitudes = generator.generate();
