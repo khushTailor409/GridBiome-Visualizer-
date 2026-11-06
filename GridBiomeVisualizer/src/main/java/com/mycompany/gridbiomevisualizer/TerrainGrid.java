@@ -48,11 +48,11 @@ public class TerrainGrid extends BorderPane {
         weatherLabel.setId("info-weather");
         positionLabel.setId("info-position");
         statusLabel.setId("status");
-        
+
         Label title = new Label("GridBiome Visualizer");
         title.getStyleClass().add("main-title");
         VBox header = new VBox(12, title);
-        
+
         generateButton.setId("generate");
         weatherButton.setId("simulate-weather");
         weatherButton.setDisable(true);
@@ -82,17 +82,17 @@ public class TerrainGrid extends BorderPane {
         BorderPane.setMargin(gridHolder, new Insets(0, 16, 16, 0));
 
         VBox information = new VBox(14,
-        new Label("Selected cell"), positionLabel, altitudeLabel,
-        biomeLabel, temperatureLabel, precipitationLabel, weatherLabel);
-        
+                new Label("Selected cell"), positionLabel, altitudeLabel,
+                biomeLabel, temperatureLabel, precipitationLabel, weatherLabel);
+
         information.setPrefWidth(215);
         information.setMinWidth(215);
         information.setPadding(new Insets(16));
         information.getStyleClass().add("information-panel");
-        
+
         setRight(information);
         BorderPane.setMargin(information, new Insets(0, 0, 16, 0));
-        
+
         statusLabel.setWrapText(true);
         setBottom(new VBox(10, legendTitle, legendItems, statusLabel));
         updateLegend();
@@ -100,7 +100,7 @@ public class TerrainGrid extends BorderPane {
 
     private Pane createGrid() {
         Pane grid = new Pane() {
-            
+
             @Override
             protected void layoutChildren() {
                 double side = Math.min(getWidth(), getHeight());
@@ -116,7 +116,7 @@ public class TerrainGrid extends BorderPane {
                 }
             }
         };
-        
+
         grid.setPrefSize(500, 500);
         grid.setMinSize(350, 350);
         grid.setMaxSize(600, 600);
@@ -124,17 +124,17 @@ public class TerrainGrid extends BorderPane {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 Button cell = new Button();
-        
+
                 cell.setManaged(false);
                 cell.setMinSize(0, 0);
                 cell.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                 cell.setId("cell-" + row + "-" + col);
                 cell.setAccessibleText("Row " + (row + 1) + ", column " + (col + 1) + ": no terrain");
                 cell.getStyleClass().add("terrain-cell");
-                
+
                 final int cellRow = row;
                 final int cellCol = col;
-                
+
                 cell.setOnAction(event -> selectCell(cellRow, cellCol));
                 cells[row][col] = cell;
                 grid.getChildren().add(cell);
@@ -156,24 +156,24 @@ public class TerrainGrid extends BorderPane {
         updateInformation();
 
         statusLabel.setText(
-            "Selected row " + (row + 1)
-            + ", column " + (col + 1) + "."
+                "Selected row " + (row + 1)
+                        + ", column " + (col + 1) + "."
         );
     }
 
     private void addLegendItem(String text, String styleClass) {
         Label swatch = new Label();
-        
+
         swatch.setMinSize(16, 16);
         swatch.setPrefSize(16, 16);
         swatch.setMaxSize(16, 16);
         swatch.getStyleClass().addAll("legend-swatch", styleClass);
-        
+
         HBox item = new HBox(6, swatch, new Label(text));
         item.setAlignment(Pos.CENTER_LEFT);
         legendItems.getChildren().add(item);
     }
-    
+
     private void updateLegend() {
         legendItems.getChildren().clear();
         if (weatherView.isSelected() && weatherData != null) {
@@ -191,12 +191,12 @@ public class TerrainGrid extends BorderPane {
         }
     }
 
-    
+
     private void renderCells() {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 int altitude = altitudes[row][col];
-                
+
                 BiomeMapper.Biome biome = BiomeMapper.classify(altitude);
                 String text = Integer.toString(altitude);
                 String styleClass = "biome-" + biome.name().toLowerCase(java.util.Locale.ROOT);
@@ -211,14 +211,14 @@ public class TerrainGrid extends BorderPane {
                 cells[row][col].setText(text);
                 cells[row][col].setAccessibleText(description);
                 cells[row][col].getStyleClass().setAll("button", "terrain-cell", styleClass);
-                
+
                 if (row == selectedRow && col == selectedCol) {
                     cells[row][col].getStyleClass().add("selected");
                 }
             }
         }
     }
-    
+
     private void updateInformation() {
         if (selectedRow < 0 || altitudes == null) return;
         int altitude = altitudes[selectedRow][selectedCol];
@@ -234,7 +234,7 @@ public class TerrainGrid extends BorderPane {
             weatherLabel.setText("Weather: " + data.getCondition().getDisplayName());
         }
     }
-    
+
     private void clearInformation() {
         positionLabel.setText("Position: --");
         altitudeLabel.setText("Altitude: --");
@@ -261,7 +261,7 @@ public class TerrainGrid extends BorderPane {
         updateInformation();
     }
 
-    
+
     private void generateTerrain() {
         altitudes = generator.generate();
         selectedRow = -1;
