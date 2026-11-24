@@ -34,4 +34,42 @@ public class WeatherStatistics {
         this.rainCount = rainCount;
         this.snowCount = snowCount;
     }
+    
+     
+     
+    public double getAverageTemperature() {
+        return averageTemperature;
+    }
+
+    public double getMinimumTemperature() {
+        return minimumTemperature;
+    }
+
+    public double getMaximumTemperature() {
+        return maximumTemperature;
+    }
+
+    public double getAveragePrecipitation() {
+        return averagePrecipitation;
+    }
+
+    public int getTotalCells() {
+        return totalCells;
+    }
+
+    public int getClearCount() {
+        return clearCount;
+    }
+
+    public int getCloudyCount() {
+        return cloudyCount;
+    }
+
+    public int getRainCount() {
+        return rainCount;
+    }
+
+    public int getSnowCount() {
+        return snowCount;
+    } 
 }
