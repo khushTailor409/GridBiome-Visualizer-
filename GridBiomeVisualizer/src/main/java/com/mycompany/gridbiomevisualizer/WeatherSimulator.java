@@ -51,6 +51,7 @@ public class WeatherSimulator {
             return condition;
         }
         
+        ggetw
     }
     private final Random random;
 
