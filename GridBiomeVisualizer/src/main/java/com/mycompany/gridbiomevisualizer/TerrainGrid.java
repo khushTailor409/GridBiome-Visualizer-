@@ -194,6 +194,20 @@ public class TerrainGrid extends BorderPane {
         }
     }
 
+    private boolean hasTerrainCell(int row, int col) {
+        return altitudes != null && row >= 0 && row < altitudes.length
+                && altitudes[row] != null && col >= 0
+                && col < altitudes[row].length
+                && altitudes[row][col] >= 0 && altitudes[row][col] <= 100;
+    }
+
+    private boolean hasWeatherCell(int row, int col) {
+        return weatherData != null && row >= 0 && row < weatherData.length
+                && weatherData[row] != null && col >= 0
+                && col < weatherData[row].length && weatherData[row][col] != null
+                && weatherData[row][col].getCondition() != null;
+    }
+
 
     private void renderCells() {
         for (int row = 0; row < GRID_SIZE; row++) {
