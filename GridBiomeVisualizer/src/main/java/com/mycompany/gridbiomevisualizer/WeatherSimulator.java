@@ -4,6 +4,7 @@
  */
 package com.mycompany.gridbiomevisualizer;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -60,10 +61,11 @@ public class WeatherSimulator {
     }
 
     public WeatherSimulator(Random random) {
-        this.random = random;
+        this.random = Objects.requireNonNull(random, "Random generator cannot be null.");
     }
 
     public WeatherData[][] simulate(int[][] altitudes) {
+        validateAltitudeGrid(altitudes);
         WeatherData[][] results = new WeatherData[altitudes.length][];
         for (int row = 0; row < altitudes.length; row++) {
             results[row] = new WeatherData[altitudes[row].length];
@@ -74,6 +76,32 @@ public class WeatherSimulator {
         }
         return results;
     }
+
+    private static void validateAltitudeGrid(int[][] altitudes) {
+        int size = TerrainGenerator.GRID_SIZE;
+        if (altitudes == null) {
+            throw new IllegalArgumentException("Terrain data is missing. Generate terrain first.");
+        }
+        if (altitudes.length != size) {
+            throw new IllegalArgumentException("Terrain data must contain " + size + " rows.");
+        }
+        for (int row = 0; row < size; row++) {
+            if (altitudes[row] == null) {
+                throw new IllegalArgumentException("Terrain row " + (row + 1) + " is missing.");
+            }
+            if (altitudes[row].length != size) {
+                throw new IllegalArgumentException("Terrain row " + (row + 1) + " must contain " + size + " columns.");
+            }
+            for (int col = 0; col < size; col++) {
+                int altitude = altitudes[row][col];
+                if (altitude < 0 || altitude > 100) {
+                    throw new IllegalArgumentException("Altitude at row " + (row + 1)
+                            + ", column " + (col + 1) + " must be between 0 and 100.");
+                }
+            }
+        }
+    }
+
     public static WeatherData calculate(int altitude, int variation) {
         if (altitude < 0 || altitude > 100 || variation < -15 || variation > 15) {
             throw new IllegalArgumentException("Invalid altitude or precipitation variation.");
