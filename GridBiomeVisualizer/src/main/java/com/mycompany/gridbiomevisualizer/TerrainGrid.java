@@ -237,12 +237,18 @@ public class TerrainGrid extends BorderPane {
     }
 
     private void updateInformation() {
-        if (selectedRow < 0 || altitudes == null) return;
+        clearInformation();
+        if (altitudes == null || selectedRow < 0 || selectedCol < 0
+                || selectedRow >= altitudes.length
+                || altitudes[selectedRow] == null
+                || selectedCol >= altitudes[selectedRow].length) return;
+        if (altitudes[selectedRow][selectedCol] < 0
+                || altitudes[selectedRow][selectedCol] > 100) return;
         int altitude = altitudes[selectedRow][selectedCol];
         positionLabel.setText("Position: " + (selectedRow + 1) + ", " + (selectedCol + 1));
         altitudeLabel.setText("Altitude: " + altitude);
         biomeLabel.setText("Biome: " + BiomeMapper.classify(altitude).getDisplayName());
-        if (weatherData != null) {
+        if (hasWeatherCell(selectedRow, selectedCol)) {
             WeatherSimulator.WeatherData data = weatherData[selectedRow][selectedCol];
             temperatureLabel.setText(String.format(java.util.Locale.ROOT,
                     "Temperature: %.1f °C", data.getTemperature()));
