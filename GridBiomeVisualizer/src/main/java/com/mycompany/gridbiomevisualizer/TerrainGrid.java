@@ -269,13 +269,25 @@ public class TerrainGrid extends BorderPane {
 
 
     private void simulateWeather() {
-        if (altitudes == null) return;
-        weatherData = simulator.simulate(altitudes);
-        weatherView.setDisable(false);
-        weatherView.setSelected(true);
-        refreshView();
-        statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
-    }
+            if (altitudes == null) {
+                statusLabel.setText("Generate terrain before simulating weather.");
+                return;
+            }
+            try {
+                weatherData = simulator.simulate(altitudes);
+                weatherView.setDisable(false);
+                weatherView.setSelected(true);
+                refreshView();
+                statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
+            } catch (IllegalArgumentException exception) {
+                weatherData = null;
+                terrainView.setSelected(true);
+                weatherView.setDisable(true);
+                clearStatistics();
+                refreshView();
+                statusLabel.setText("Weather could not be simulated: " + exception.getMessage());
+            }
+        }
     
     private void updateStatistics() {
         WeatherStatistics statistics = WeatherStatistics.calculate(weatherData);
