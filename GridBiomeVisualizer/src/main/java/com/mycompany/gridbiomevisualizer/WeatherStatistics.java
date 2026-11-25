@@ -35,7 +35,59 @@ public class WeatherStatistics {
         this.snowCount = snowCount;
     }
     
-     
+     public static WeatherStatistics calculate(WeatherSimulator.WeatherData[][] weatherData) {
+        if (weatherData == null || weatherData.length == 0) {
+            throw new IllegalArgumentException("Weather data cannot be empty.");
+        }
+
+        double temperatureSum = 0;
+        double precipitationSum = 0;
+        double minimumTemperature = Double.POSITIVE_INFINITY;
+        double maximumTemperature = Double.NEGATIVE_INFINITY;
+        int totalCells = 0;
+        int clearCount = 0;
+        int cloudyCount = 0;
+        int rainCount = 0;
+        int snowCount = 0;
+
+        for (int row = 0; row < weatherData.length; row++) {
+            if (weatherData[row] == null) {
+                throw new IllegalArgumentException("Weather data rows cannot be null.");
+            }
+
+            for (int col = 0; col < weatherData[row].length; col++) {
+                WeatherSimulator.WeatherData cell = weatherData[row][col];
+                if (cell == null) {
+                    throw new IllegalArgumentException("Weather data cells cannot be null.");
+                }
+
+                double temperature = cell.getTemperature();
+                double precipitation = cell.getPrecipitation();
+
+                temperatureSum += temperature;
+                precipitationSum += precipitation;
+                minimumTemperature = Math.min(minimumTemperature, temperature);
+                maximumTemperature = Math.max(maximumTemperature, temperature);
+                totalCells++;
+
+                switch (cell.getCondition()) {
+                    case CLEAR:
+                        clearCount++;
+                        break;
+                    case CLOUDY:
+                        cloudyCount++;
+                        break;
+                    case RAIN:
+                        rainCount++;
+                        break;
+                    case SNOW:
+                        snowCount++;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown weather condition.");
+                }
+            }
+        } 
      
     public double getAverageTemperature() {
         return averageTemperature;
