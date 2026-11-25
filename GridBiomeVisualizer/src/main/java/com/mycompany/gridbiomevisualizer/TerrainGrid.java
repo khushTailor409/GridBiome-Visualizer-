@@ -38,8 +38,11 @@ public class TerrainGrid extends BorderPane {
     private WeatherSimulator.WeatherData[][] weatherData;
     private final RadioButton terrainView = new RadioButton("Terrain");
     private final RadioButton weatherView = new RadioButton("Weather");
-
-
+    private final Label averageTemperatureStatistic = new Label("Average temperature: --");
+    private final Label temperatureRangeStatistic = new Label("Temperature range: --");
+    private final Label averagePrecipitationStatistic = new Label("Average precipitation: --");
+    private final Label totalCellsStatistic = new Label("Cells counted: --");
+    private final Label conditionCountsStatistic = new Label("Conditions: --");
 
     public TerrainGrid() {
         setPadding(new Insets(18));
@@ -252,8 +255,33 @@ public class TerrainGrid extends BorderPane {
         weatherView.setSelected(true);
         refreshView();
         statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
-
     }
+    
+    private void updateStatistics() {
+        WeatherStatistics statistics = WeatherStatistics.calculate(weatherData);
+
+        averageTemperatureStatistic.setText(String.format(java.util.Locale.ROOT,
+                "Average temperature: %.1f °C", statistics.getAverageTemperature()));
+        temperatureRangeStatistic.setText(String.format(java.util.Locale.ROOT,
+                "Temperature range: %.1f to %.1f °C",
+                statistics.getMinimumTemperature(), statistics.getMaximumTemperature()));
+        averagePrecipitationStatistic.setText(String.format(java.util.Locale.ROOT,
+                "Average precipitation: %.1f%%", statistics.getAveragePrecipitation()));
+        totalCellsStatistic.setText("Cells counted: " + statistics.getTotalCells());
+        conditionCountsStatistic.setText(String.format(java.util.Locale.ROOT,
+                "Conditions: Clear %d, Cloudy %d, Rain %d, Snow %d",
+                statistics.getClearCount(), statistics.getCloudyCount(),
+                statistics.getRainCount(), statistics.getSnowCount()));
+    }
+
+    private void clearStatistics() {
+        averageTemperatureStatistic.setText("Average temperature: --");
+        temperatureRangeStatistic.setText("Temperature range: --");
+        averagePrecipitationStatistic.setText("Average precipitation: --");
+        totalCellsStatistic.setText("Cells counted: --");
+        conditionCountsStatistic.setText("Conditions: --");
+    }
+    
     private void refreshView() {
         if (altitudes == null) return;
         renderCells();
