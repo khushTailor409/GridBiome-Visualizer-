@@ -303,5 +303,5 @@ public class TerrainGrid extends BorderPane {
         clearInformation();
         renderCells();
         statusLabel.setText("New terrain generated. Select a cell to inspect it.");
-    }//test againawdawdawdaw
+    }
 }
