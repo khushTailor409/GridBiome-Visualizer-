@@ -88,6 +88,22 @@ public class WeatherStatistics {
                 }
             }
         } 
+
+        if (totalCells == 0) {
+            throw new IllegalArgumentException("Weather data must contain at least one cell.");
+        }
+
+        return new WeatherStatistics(
+                temperatureSum / totalCells,
+                minimumTemperature,
+                maximumTemperature,
+                precipitationSum / totalCells,
+                totalCells,
+                clearCount,
+                cloudyCount,
+                rainCount,
+                snowCount);
+    }
      
     public double getAverageTemperature() {
         return averageTemperature;
