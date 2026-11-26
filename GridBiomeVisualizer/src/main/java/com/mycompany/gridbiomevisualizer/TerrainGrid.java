@@ -289,50 +289,86 @@ public class TerrainGrid extends BorderPane {
 
 
     private void simulateWeather() {
-            if (altitudes == null) {
-                statusLabel.setText("Generate terrain before simulating weather.");
-                return;
-            }
-            try {
-                weatherData = simulator.simulate(altitudes);
-                weatherView.setDisable(false);
-                weatherView.setSelected(true);
-                refreshView();
-                statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
-            } catch (IllegalArgumentException exception) {
-                weatherData = null;
-                terrainView.setSelected(true);
-                weatherView.setDisable(true);
-                clearStatistics();
-                refreshView();
-                statusLabel.setText("Weather could not be simulated: " + exception.getMessage());
-            }
+        if (altitudes == null) {
+            statusLabel.setText("Generate terrain before simulating weather.");
+            return;
         }
+
+        try {
+            weatherData = simulator.simulate(altitudes);
+            updateWeatherStatistics();
+            weatherView.setDisable(false);
+            weatherView.setSelected(true);
+            refreshView();
+            statusLabel.setText("Weather simulated. Select a cell or switch back to Terrain.");
+        } catch (IllegalArgumentException exception) {
+            weatherData = null;
+            terrainView.setSelected(true);
+            weatherView.setDisable(true);
+            clearWeatherStatistics();
+            refreshView();
+            statusLabel.setText("Weather could not be simulated: " + exception.getMessage());
+        }
+    }
     
-    private void updateStatistics() {
+    private void updateTerrainStatistics() {
+        TerrainStatistics statistics = TerrainStatistics.calculate(altitudes);
+
+        averageAltitudeStatistic.setText(String.format(java.util.Locale.ROOT,
+                "Average altitude: %.1f", statistics.getAverageAltitude()));
+        
+        highestAltitudeStatistic.setText(
+                "Highest cell: " + statistics.getHighestAltitude()
+                + " at row " + (statistics.getHighestRow() + 1)
+                + ", column " + (statistics.getHighestColumn() + 1));
+        
+        lowestAltitudeStatistic.setText(
+                "Lowest cell: " + statistics.getLowestAltitude()
+                + " at row " + (statistics.getLowestRow() + 1)
+                + ", column " + (statistics.getLowestColumn() + 1));
+        
+        biomeCountsStatistic.setText(String.format(java.util.Locale.ROOT,
+                "Biomes: Ocean %d, Beach %d, Grassland %d, Forest %d, Mountain %d",
+                statistics.getOceanCount(), statistics.getBeachCount(),
+                statistics.getGrasslandCount(), statistics.getForestCount(),
+                statistics.getMountainCount()));
+    }
+    
+    private void clearTerrainStatistics() {
+        averageAltitudeStatistic.setText("Average altitude: --");
+        highestAltitudeStatistic.setText("Highest cell: --");
+        lowestAltitudeStatistic.setText("Lowest cell: --");
+        biomeCountsStatistic.setText("Biomes: --");
+    }
+    
+    private void updateWeatherStatistics() {
         WeatherStatistics statistics = WeatherStatistics.calculate(weatherData);
 
         averageTemperatureStatistic.setText(String.format(java.util.Locale.ROOT,
                 "Average temperature: %.1f °C", statistics.getAverageTemperature()));
+        
         temperatureRangeStatistic.setText(String.format(java.util.Locale.ROOT,
                 "Temperature range: %.1f to %.1f °C",
                 statistics.getMinimumTemperature(), statistics.getMaximumTemperature()));
+        
         averagePrecipitationStatistic.setText(String.format(java.util.Locale.ROOT,
                 "Average precipitation: %.1f%%", statistics.getAveragePrecipitation()));
+        
         totalCellsStatistic.setText("Cells counted: " + statistics.getTotalCells());
+        
         conditionCountsStatistic.setText(String.format(java.util.Locale.ROOT,
                 "Conditions: Clear %d, Cloudy %d, Rain %d, Snow %d",
                 statistics.getClearCount(), statistics.getCloudyCount(),
                 statistics.getRainCount(), statistics.getSnowCount()));
-    }
-
-    private void clearStatistics() {
+        }
+    
+    private void clearWeatherStatistics() {
         averageTemperatureStatistic.setText("Average temperature: --");
         temperatureRangeStatistic.setText("Temperature range: --");
         averagePrecipitationStatistic.setText("Average precipitation: --");
         totalCellsStatistic.setText("Cells counted: --");
         conditionCountsStatistic.setText("Conditions: --");
-    }
+}
     
     private void refreshView() {
         if (altitudes == null) return;
@@ -347,10 +383,14 @@ public class TerrainGrid extends BorderPane {
         selectedRow = -1;
         selectedCol = -1;
         weatherData = null;
+
         terrainView.setSelected(true);
         terrainView.setDisable(false);
         weatherView.setDisable(true);
         weatherButton.setDisable(false);
+
+        updateTerrainStatistics();
+        clearWeatherStatistics();
         updateLegend();
         clearInformation();
         renderCells();
