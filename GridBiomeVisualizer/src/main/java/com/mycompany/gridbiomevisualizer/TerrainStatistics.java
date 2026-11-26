@@ -61,7 +61,7 @@ public final class TerrainStatistics {
                 highestAltitude, highestRow, highestColumn);
     }
     
-     private static void validateAltitudeGrid(int[][] altitudes) {
+    private static void validateAltitudeGrid(int[][] altitudes) {
         if (altitudes == null
                 || altitudes.length != TerrainGenerator.GRID_SIZE) {
             throw new IllegalArgumentException(
@@ -87,5 +87,33 @@ public final class TerrainStatistics {
                 }
             }
         }
+    }
+    
+    public double getAverageAltitude() {
+        return averageAltitude;
+    }
+
+    public int getLowestAltitude() {
+        return lowestAltitude;
+    }
+
+    public int getLowestRow() {
+        return lowestRow;
+    }
+
+    public int getLowestColumn() {
+        return lowestColumn;
+    }
+
+    public int getHighestAltitude() {
+        return highestAltitude;
+    }
+
+    public int getHighestRow() {
+        return highestRow;
+    }
+
+    public int getHighestColumn() {
+        return highestColumn;
     }
 }
