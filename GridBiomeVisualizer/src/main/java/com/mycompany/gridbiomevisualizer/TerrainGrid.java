@@ -43,6 +43,10 @@ public class TerrainGrid extends BorderPane {
     private final Label averagePrecipitationStatistic = new Label("Average precipitation: --");
     private final Label totalCellsStatistic = new Label("Cells counted: --");
     private final Label conditionCountsStatistic = new Label("Conditions: --");
+    private final Label averageAltitudeStatistic = new Label("Average altitude: --");
+    private final Label highestAltitudeStatistic = new Label("Highest cell: --");
+    private final Label lowestAltitudeStatistic = new Label("Lowest cell: --");
+    private final Label biomeCountsStatistic = new Label("Biomes: --");
 
     public TerrainGrid() {
         setPadding(new Insets(18));
@@ -83,10 +87,26 @@ public class TerrainGrid extends BorderPane {
         StackPane gridHolder = new StackPane(createGrid());
         setCenter(gridHolder);
         BorderPane.setMargin(gridHolder, new Insets(0, 16, 16, 0));
-
-        VBox information = new VBox(14,
-                new Label("Selected cell"), positionLabel, altitudeLabel,
-                biomeLabel, temperatureLabel, precipitationLabel, weatherLabel);
+        
+        Label selectedCellTitle = new Label("Selected cell");
+        Label terrainStatisticsTitle = new Label("Terrain statistics");
+        Label weatherStatisticsTitle = new Label("Weather statistics");
+        
+        VBox information = new VBox(10,
+        selectedCellTitle,
+        positionLabel, altitudeLabel, biomeLabel,
+        temperatureLabel, precipitationLabel, weatherLabel,
+        terrainStatisticsTitle,
+        averageAltitudeStatistic,
+        highestAltitudeStatistic,
+        lowestAltitudeStatistic,
+        biomeCountsStatistic,
+        weatherStatisticsTitle,
+        averageTemperatureStatistic,
+        temperatureRangeStatistic,
+        averagePrecipitationStatistic,
+        totalCellsStatistic,
+        conditionCountsStatistic);
 
         information.setPrefWidth(215);
         information.setMinWidth(215);
