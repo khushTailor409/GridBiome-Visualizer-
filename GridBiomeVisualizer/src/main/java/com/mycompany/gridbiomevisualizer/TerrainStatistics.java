@@ -60,4 +60,32 @@ public final class TerrainStatistics {
                 lowestAltitude, lowestRow, lowestColumn,
                 highestAltitude, highestRow, highestColumn);
     }
+    
+     private static void validateAltitudeGrid(int[][] altitudes) {
+        if (altitudes == null
+                || altitudes.length != TerrainGenerator.GRID_SIZE) {
+            throw new IllegalArgumentException(
+                    "Terrain data must contain "
+                    + TerrainGenerator.GRID_SIZE + " rows.");
+        }
+
+        for (int row = 0; row < TerrainGenerator.GRID_SIZE; row++) {
+            if (altitudes[row] == null
+                    || altitudes[row].length != TerrainGenerator.GRID_SIZE) {
+                throw new IllegalArgumentException(
+                        "Each terrain row must contain "
+                        + TerrainGenerator.GRID_SIZE + " columns.");
+            }
+
+            for (int column = 0; column < TerrainGenerator.GRID_SIZE;
+                    column++) {
+                int altitude = altitudes[row][column];
+
+                if (altitude < 0 || altitude > 100) {
+                    throw new IllegalArgumentException(
+                            "Altitude values must be between 0 and 100.");
+                }
+            }
+        }
+    }
 }
